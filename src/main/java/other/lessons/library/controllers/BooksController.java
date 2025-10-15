@@ -41,8 +41,9 @@ public class BooksController {
     }
 
     @DeleteMapping("{id}") // DELETE http://localhost:9091/books/23
-    public Book deleteBook(@PathVariable Long id) {
-        return bookService.deleteBook(id);
+    public ResponseEntity deleteBook(@PathVariable Long id) {
+        bookService.deleteBook(id);
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping // GET http://localhost:9091/books

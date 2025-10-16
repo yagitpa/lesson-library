@@ -39,4 +39,19 @@ public class BookService {
     public Collection<Book> getAllBooks() {
         return bookRepository.findAll();
     }
+
+    // Ищем книжки по названию, делая поиск регистронезависимым
+    public Book findByName(String name) {
+        return bookRepository.findByNameIgnoreCase(name);
+    }
+
+    // Ищем книжки по автору, допуская ввод части запроса, а так же делая запрос регистронезависимым
+    public Collection<Book> findByAuthor(String author) {
+        return bookRepository.findBooksByAuthorContainsIgnoreCase(author);
+    }
+
+    // Ищем книжки по части названия, делая запрос регистронезависимым
+    public Collection<Book> findByNamePart(String part) {
+        return bookRepository.findAllByNameContainsIgnoreCase(part);
+    }
 }

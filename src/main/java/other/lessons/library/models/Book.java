@@ -25,6 +25,10 @@ public class Book {
     @Column(nullable = false, length = 300)
     private String author;
 
+    @ManyToOne
+    @JoinColumn(name = "reader_id")
+    private Reader reader;
+
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;

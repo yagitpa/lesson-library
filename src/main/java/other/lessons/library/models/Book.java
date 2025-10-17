@@ -1,5 +1,6 @@
 package other.lessons.library.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -17,7 +18,7 @@ public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "book_seq")
     @SequenceGenerator(name = "book_seq", sequenceName = "book_id_seq", allocationSize = 1)
-    private long id;
+    private Long bookId;
 
     @Column(nullable = false, length = 500)
     private String name;
@@ -29,6 +30,9 @@ public class Book {
     @JoinColumn(name = "reader_id")
     private Reader reader;
 
+    @OneToOne(mappedBy = "book", cascade = CascadeType.ALL)
+    private BookCover bookCover;
+
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
@@ -37,12 +41,12 @@ public class Book {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    public long getId() {
-        return id;
+    public Long getBookId() {
+        return bookId;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setBookId(Long bookId) {
+        this.bookId = bookId;
     }
 
     public String getName() {
@@ -66,14 +70,14 @@ public class Book {
         if (o == null || getClass() != o.getClass()) return false;
 
         Book book = (Book) o;
-        return id == book.id &&
+        return bookId == book.bookId &&
                 Objects.equals(name, book.name) &&
                 Objects.equals(author, book.author);
     }
 
     @Override
     public int hashCode() {
-        int result = Long.hashCode(id);
+        int result = Long.hashCode(bookId);
         result = 31 * result + Objects.hashCode(name);
         result = 31 * result + Objects.hashCode(author);
         return result;
@@ -82,7 +86,7 @@ public class Book {
     @Override
     public String toString() {
         return "Book{" +
-                "id=" + id +
+                "id=" + bookId +
                 ", name='" + name + '\'' +
                 ", author='" + author + '\'' +
                 '}';

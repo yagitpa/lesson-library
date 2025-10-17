@@ -18,7 +18,7 @@ public class Reader {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "reader_seq")
     @SequenceGenerator(name = "reader_seq", sequenceName = "reader_id_seq", allocationSize = 1)
-    private long readerId;
+    private Long readerId;
 
     @Column(nullable = false, length = 20)
     private int personalNumber;

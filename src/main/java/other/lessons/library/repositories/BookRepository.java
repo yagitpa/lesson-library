@@ -4,6 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import other.lessons.library.models.Book;
 
 import java.util.Collection;
+import java.util.Optional;
 
 public interface BookRepository extends JpaRepository<Book, Long> {
 
@@ -14,4 +15,6 @@ public interface BookRepository extends JpaRepository<Book, Long> {
     Collection<Book> findAllByNameContainsIgnoreCase(String part);
 
     Collection<Book> findBooksByNameIgnoreCaseAndAuthorIgnoreCase(String name, String author);
+
+    Optional<Book> findByBookId(Long bookId);
 }

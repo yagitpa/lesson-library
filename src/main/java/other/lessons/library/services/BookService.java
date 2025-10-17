@@ -17,12 +17,16 @@ public class BookService {
 
     // Создаем книжку
     public Book createBook(Book book) {
+        if (book.getBookId() != null && book.getBookId() == 0) {
+            book.setBookId(null);
+        }
         return bookRepository.save(book);
     }
 
-    // Ищем книжку по id
-    public Book findBook(long id) {
-        return bookRepository.findById(id).get();
+    // Ищем книжку по bookId
+    public Book findBook(Long bookId) {
+        return bookRepository.findById(bookId)
+                .orElseThrow(() -> new RuntimeException("Book not found with id: " + bookId));
     }
 
     // Редактируем книжку
@@ -30,13 +34,28 @@ public class BookService {
         return bookRepository.save(book);
     }
 
-    // Удаляем книжку по id
-    public void deleteBook(long id) {
-        bookRepository.deleteById(id);
+    // Удаляем книжку по bookId
+    public void deleteBook(long bookId) {
+        bookRepository.deleteById(bookId);
     }
 
     // Получаем список всех книг из базы
     public Collection<Book> getAllBooks() {
         return bookRepository.findAll();
+    }
+
+    // Ищем книжки по названию, делая поиск регистронезависимым
+    public Book findByName(String name) {
+        return bookRepository.findByNameIgnoreCase(name);
+    }
+
+    // Ищем книжки по автору, допуская ввод части запроса, а так же делая запрос регистронезависимым
+    public Collection<Book> findByAuthor(String author) {
+        return bookRepository.findBooksByAuthorContainsIgnoreCase(author);
+    }
+
+    // Ищем книжки по части названия, делая запрос регистронезависимым
+    public Collection<Book> findByNamePart(String part) {
+        return bookRepository.findAllByNameContainsIgnoreCase(part);
     }
 }

@@ -1,6 +1,5 @@
 package other.lessons.library.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -70,7 +69,7 @@ public class Book {
         if (o == null || getClass() != o.getClass()) return false;
 
         Book book = (Book) o;
-        return bookId == book.bookId &&
+        return Objects.equals(bookId, book.bookId) &&
                 Objects.equals(name, book.name) &&
                 Objects.equals(author, book.author);
     }

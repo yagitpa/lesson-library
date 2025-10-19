@@ -70,10 +70,12 @@ public class BookCoverService {
 
     // Ищем обложку по ID книжки
     public BookCover findBookCover(Long bookId) {
+        // Если обложка существует - возвращаем ее
         Optional<BookCover> optionalBookCover = bookCoverRepository.findByBook_BookId(bookId);
         if (optionalBookCover.isPresent()) {
             return optionalBookCover.get();
         } else {
+            // Если обложки нет - создаем ее
             BookCover newBookCover = new BookCover();
             Book book = bookService.findBook(bookId);
             newBookCover.setBook(book);
